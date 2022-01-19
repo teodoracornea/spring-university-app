@@ -1,11 +1,13 @@
 package ro.fasttrackit.service;
 
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import ro.fasttrackit.model.Human;
 import ro.fasttrackit.repository.HumansRepository;
 import ro.fasttrackit.repository.dao.HumanEntity;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -66,13 +68,17 @@ public class HumanService {
 
 //    GET by ID to retrieve a single Human by an ID given as a Request Parameter
     public Human getHuman(Long humanIdToGet){
-        this.humansRepository.findById(humanIdToGet);
         Human humanCreated = new Human();
 
-        humanCreated.setId(humansRepository.findById(humanIdToGet).get().getId());
-        humanCreated.setLastname(humansRepository.findById(humanIdToGet).get().getLastName());
-        humanCreated.setFirstname(humansRepository.findById(humanIdToGet).get().getFirstname());
-        humanCreated.setCnp(humansRepository.findById(humanIdToGet).get().getCnp());
+        Optional<HumanEntity> humanEntityOptional = humansRepository.findById(humanIdToGet);
+        if (humanEntityOptional.isEmpty()){
+            return humanCreated;
+        }
+        HumanEntity humanEntity = humanEntityOptional.get();
+        humanCreated.setId(humanEntity.getId());
+        humanCreated.setLastname(humanEntity.getLastName());
+        humanCreated.setFirstname(humanEntity.getFirstname());
+        humanCreated.setCnp(humanEntity.getCnp());
         return humanCreated;
     }
 

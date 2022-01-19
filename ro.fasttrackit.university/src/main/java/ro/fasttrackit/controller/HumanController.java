@@ -23,11 +23,13 @@ public class HumanController {
     }
 
     @GetMapping("/api/humans")
-    public ResponseEntity<List<Human>> getAllHumans(@RequestParam(name = "lastname", required = false) String searchByLastName) {
-        if(searchByLastName != null && searchByLastName.isBlank()){
-            return ResponseEntity.ok(humanService.getAllHumans());
+    public ResponseEntity<List<Human>> getAllHumans(
+            @RequestParam(name = "lastname", required = false) String searchByLastName) {
+        if(searchByLastName != null && !searchByLastName.isBlank()){
+            return ResponseEntity.ok(humanService.findAllByLastName(searchByLastName));
         }
-        return ResponseEntity.ok(humanService.findAllByLastName(searchByLastName));
+        return ResponseEntity.ok(humanService.getAllHumans());
+
     }
 
     @PostMapping("/api/humans")
