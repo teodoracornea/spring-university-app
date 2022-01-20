@@ -1,8 +1,11 @@
-package ro.fasttrackit.model;
+package ro.fasttrackit.service.model;
 
 import java.util.Objects;
 
-public class Human {
+/*
+DTO = Data Transmission Object (is a plain old java object)
+ */
+public class HumanDto {
     private Long id;
     private String cnp;
     private String lastname;
@@ -41,27 +44,18 @@ public class Human {
     }
 
     @Override
-    public String toString() {
-        return "Human{" +
-                "id=" + id +
-                ", cnp='" + cnp + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", firstname='" + firstname + '\'' +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Human human = (Human) o;
-        return Objects.equals(id, human.id) && Objects.equals(cnp, human.cnp) &&
-                Objects.equals(lastname, human.lastname) &&
-                Objects.equals(firstname, human.firstname);
+        HumanDto humanDto = (HumanDto) o;
+        return Objects.equals(id, humanDto.id) && Objects.equals(cnp, humanDto.cnp) && Objects.equals(lastname, humanDto.lastname)
+                && Objects.equals(firstname, humanDto.firstname);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, cnp, lastname, firstname);
     }
+
+
 }

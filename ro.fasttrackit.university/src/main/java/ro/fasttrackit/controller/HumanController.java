@@ -2,8 +2,8 @@ package ro.fasttrackit.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ro.fasttrackit.model.Human;
 import ro.fasttrackit.service.HumanService;
+import ro.fasttrackit.service.model.HumanDto;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class HumanController {
     }
 
     @GetMapping("/api/humans")
-    public ResponseEntity<List<Human>> getAllHumans(
+    public ResponseEntity<List<HumanDto>> getAllHumans(
             @RequestParam(name = "lastname", required = false) String searchByLastName) {
         if(searchByLastName != null && !searchByLastName.isBlank()){
             return ResponseEntity.ok(humanService.findAllByLastName(searchByLastName));
@@ -33,7 +33,7 @@ public class HumanController {
     }
 
     @PostMapping("/api/humans")
-    public ResponseEntity createOrUpdateHuman(@RequestBody Human humanRequest){
+    public ResponseEntity createOrUpdateHuman(@RequestBody HumanDto humanRequest){
         this.humanService.createOrUpdateHuman(humanRequest);
         return ResponseEntity.ok().build();
     }
@@ -46,7 +46,7 @@ public class HumanController {
     }
 
     @GetMapping("/api/humans/{id}")
-    public ResponseEntity<Human> getHuman(@PathVariable("id") Long humanId){
+    public ResponseEntity<HumanDto> getHuman(@PathVariable("id") Long humanId){
         return ResponseEntity.ok(humanService.getHuman(humanId));
     }
 

@@ -2,9 +2,9 @@ package ro.fasttrackit.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ro.fasttrackit.model.Semester;
 import ro.fasttrackit.repository.dao.SemesterEntity;
 import ro.fasttrackit.service.SemesterService;
+import ro.fasttrackit.service.model.SemesterDto;
 
 import java.util.List;
 
@@ -18,13 +18,13 @@ public class SemesterController {
     }
 
     @PostMapping("/api/semesters")
-    public ResponseEntity createOrUpdateSemester(@RequestBody Semester semesterRequest){
+    public ResponseEntity createOrUpdateSemester(@RequestBody SemesterDto semesterRequest){
         this.semesterService.createOrUpdateSemester(semesterRequest);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/api/semesters")
-    public ResponseEntity<List<Semester>> getAllSemesters(){
+    public ResponseEntity<List<SemesterDto>> getAllSemesters(){
         return ResponseEntity.ok(semesterService.getAllSemesters());
     }
 
@@ -35,7 +35,7 @@ public class SemesterController {
     }
 
     @GetMapping("/api/semesters-two")
-    public ResponseEntity<List<SemesterEntity>> getAllSemestersTwo(){
+    public ResponseEntity<List<SemesterDto>> getAllSemestersTwo(){
         return ResponseEntity.ok(semesterService.findAllSemesterTwo());
     }
 

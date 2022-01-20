@@ -1,16 +1,28 @@
-package ro.fasttrackit.model;
+package ro.fasttrackit.service.model;
 
-import java.time.Year;
 import java.util.Date;
 import java.util.Objects;
 
-public class Semester {
+public class SemesterDto {
     private Long id;
     private String universityDept;
     private String universityYear;
     private String semesterNo;
     private Date startDate;
     private Date endDate;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SemesterDto that = (SemesterDto) o;
+        return Objects.equals(id, that.id) && Objects.equals(universityDept, that.universityDept) && Objects.equals(universityYear, that.universityYear) && Objects.equals(semesterNo, that.semesterNo) && Objects.equals(startDate, that.startDate) && Objects.equals(endDate, that.endDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, universityDept, universityYear, semesterNo, startDate, endDate);
+    }
 
     public Long getId() {
         return id;
@@ -59,35 +71,4 @@ public class Semester {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
-
-    @Override
-    public String toString() {
-        return "Semester{" +
-                "id=" + id +
-                ", universityDept='" + universityDept + '\'' +
-                ", universityYear='" + universityYear + '\'' +
-                ", semesterNo='" + semesterNo + '\'' +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Semester semester = (Semester) o;
-        return Objects.equals(id, semester.id) && Objects.equals(universityDept, semester.universityDept) && Objects.equals(universityYear, semester.universityYear) && Objects.equals(semesterNo, semester.semesterNo) && Objects.equals(startDate, semester.startDate) && Objects.equals(endDate, semester.endDate);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, universityDept, universityYear, semesterNo, startDate, endDate);
-    }
 }
-
-
-
-
-
-

@@ -1,10 +1,10 @@
 package ro.fasttrackit.service;
 
 import org.springframework.stereotype.Service;
-import ro.fasttrackit.model.Semester;
 import ro.fasttrackit.repository.SemesterRepository;
 import ro.fasttrackit.repository.dao.HumanEntity;
 import ro.fasttrackit.repository.dao.SemesterEntity;
+import ro.fasttrackit.service.model.SemesterDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,11 +17,11 @@ public class SemesterService {
         this.semesterRepository = semesterRepository;
     }
 
-    public List<Semester> getAllSemesters(){
+    public List<SemesterDto> getAllSemesters(){
         final List<SemesterEntity> all = this.semesterRepository.findAll();
         return all.stream()
                 .map(semesterEntity -> {
-                    Semester createdSemester = new Semester();
+                    SemesterDto createdSemester = new SemesterDto();
                     createdSemester.setId(semesterEntity.getId());
                     createdSemester.setUniversityDept(semesterEntity.getUniversityDept());
                     createdSemester.setUniversityYear(semesterEntity.getUniversityYear());
@@ -33,7 +33,7 @@ public class SemesterService {
                 .collect(Collectors.toList());
     }
 
-    public void createOrUpdateSemester(Semester toCreate){
+    public void createOrUpdateSemester(SemesterDto toCreate){
 
         SemesterEntity createOrUpdateMe = new SemesterEntity();
         createOrUpdateMe.setId(toCreate.getId());
@@ -50,8 +50,22 @@ public class SemesterService {
         this.semesterRepository.deleteById(semesterIdToDelete);
     }
 
-    public List<SemesterEntity> findAllSemesterTwo(){
-        return this.semesterRepository.findAllSemesterTwo();
+    public List<SemesterDto> findAllSemesterTwo(){
+
+        return this.semesterRepository.findAllSemesterTwo()
+                .stream()
+                .map(semesterEntity -> {
+                    SemesterDto createdSemester = new SemesterDto();
+                    createdSemester.setId(semesterEntity.getId());
+                    createdSemester.setUniversityDept(semesterEntity.getUniversityDept());
+                    createdSemester.setUniversityYear(semesterEntity.getUniversityYear());
+                    createdSemester.setSemesterNo(semesterEntity.getSemesterNo());
+                    createdSemester.setStartDate(semesterEntity.getStartDate());
+                    createdSemester.setEndDate(semesterEntity.getEndDate());
+                    return createdSemester;
+                        })
+                .collect(Collectors.toList());
+
     }
 
 
