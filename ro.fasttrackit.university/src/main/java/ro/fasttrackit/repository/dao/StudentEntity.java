@@ -2,15 +2,13 @@ package ro.fasttrackit.repository.dao;
 
 import javax.persistence.*;
 import java.util.Objects;
-
+@Table(name = "students")
 @Entity(name = "students")
-public class StudentEntity extends HumanEntity {
+public class StudentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "human_id", referencedColumnName = "id")
+    @OneToOne(targetEntity = HumanEntity.class, cascade = CascadeType.ALL)
     private HumanEntity human;
 
     @Override
@@ -21,17 +19,17 @@ public class StudentEntity extends HumanEntity {
         return Objects.equals(id, that.id) && Objects.equals(human, that.human);
     }
 
-    @Override
+
     public int hashCode() {
         return Objects.hash(id, human);
     }
 
-    @Override
+
     public Long getId() {
         return id;
     }
 
-    @Override
+
     public void setId(Long id) {
         this.id = id;
     }

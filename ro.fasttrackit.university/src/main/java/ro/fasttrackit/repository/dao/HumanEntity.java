@@ -3,10 +3,10 @@ package ro.fasttrackit.repository.dao;
 import javax.persistence.*;
 //Create a Human entity
 @Entity(name = "humans")
+@Table(name = "humans")
 public class HumanEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
     private Long id;
     @Column
     private String cnp;

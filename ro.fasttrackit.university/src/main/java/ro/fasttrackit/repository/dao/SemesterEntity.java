@@ -8,7 +8,6 @@ import java.util.Date;
 public class SemesterEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
     private Long id;
     @Column
     private String universityDept;

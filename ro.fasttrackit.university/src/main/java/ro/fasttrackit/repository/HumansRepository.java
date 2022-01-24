@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface HumansRepository extends JpaRepository<HumanEntity, Long> {
 
-List<HumanEntity> findAllByLastNameContains(String lastname);
+//List<HumanEntity> findAllByLastNameContains(String lastname);
 
 
 }
