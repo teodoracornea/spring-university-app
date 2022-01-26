@@ -23,6 +23,7 @@ public class CourseController {
 
     @GetMapping("/api/courses")
     public ResponseEntity<List<CourseDto>> getAllCourses(){
+
         return ResponseEntity.ok(courseService.getAllCourses());
     }
 

@@ -1,11 +1,7 @@
 package ro.fasttrackit.controller;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import ro.fasttrackit.repository.HumansRepository;
+import org.springframework.web.bind.annotation.*;
 import ro.fasttrackit.service.StudentService;
 import ro.fasttrackit.service.model.StudentDto;
 
@@ -30,6 +26,13 @@ public class StudentController {
     public ResponseEntity<List<StudentDto>> getAllStudents(){
         return ResponseEntity.ok(studentService.getAllStudents());
     }
+
+    @DeleteMapping("/api/students/{id}")
+    public void deleteStudentById(@PathVariable("id") Long studentID){
+        this.studentService.deleteStudentById(studentID);
+    }
+
+
 
 
 }

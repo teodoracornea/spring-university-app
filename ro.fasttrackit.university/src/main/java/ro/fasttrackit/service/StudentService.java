@@ -24,6 +24,7 @@ public class StudentService {
 
     public void createOrUpdateStudent(StudentDto toCreate){
         HumanEntity createOrUpdateHuman = new HumanEntity();
+        createOrUpdateHuman.setId(toCreate.getHuman().getId());
         createOrUpdateHuman.setCnp(toCreate.getHuman().getCnp());
         createOrUpdateHuman.setFirstname(toCreate.getHuman().getFirstname());
         createOrUpdateHuman.setLastName(toCreate.getHuman().getLastname());
@@ -35,7 +36,6 @@ public class StudentService {
         createOrUpdateMe.setHuman(savedHuman);
 
         this.studentRepository.save(createOrUpdateMe);
-
 
     }
 
@@ -56,5 +56,11 @@ public class StudentService {
                 .collect(Collectors.toList());
 
     }
+
+    public void deleteStudentById(Long studentIdToDelete){
+        this.studentRepository.deleteById(studentIdToDelete);
+    }
+
+
 
 }

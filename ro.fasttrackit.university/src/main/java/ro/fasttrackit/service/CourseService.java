@@ -18,7 +18,6 @@ public class CourseService {
     }
 
     public void createOrUpdateCourse(CourseDto toCreate){
-
         CourseEntity createOrUpdateMe = new CourseEntity();
         createOrUpdateMe.setId(toCreate.getId());
         createOrUpdateMe.setCourse(toCreate.getCourse());
@@ -39,6 +38,7 @@ public class CourseService {
     }
 
     public void deleteCourseById(Long courseIdToDelete){
+
         this.courseRepository.deleteById(courseIdToDelete);
     }
 
