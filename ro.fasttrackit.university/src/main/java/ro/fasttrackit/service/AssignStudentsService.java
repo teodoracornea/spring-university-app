@@ -11,10 +11,7 @@ import ro.fasttrackit.repository.dao.SemesterEntity;
 import ro.fasttrackit.service.model.AssignDto;
 import ro.fasttrackit.service.model.AssignStudentsDto;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,71 +32,38 @@ public class AssignStudentsService {
         this.scheduledCoursesRepository = scheduledCoursesRepository;
     }
 
-    public Set<ScheduledCoursesEntity> assignCoursesToStudents(AssignDto assignDto) {
+    public String assignCoursesToStudents(AssignDto assignDto) {
         final Set<Long> studentsId = assignDto.getStudentIdSet();
         final Set<Long> coursesId = new HashSet<>();
+        final Set<Long> notAssigned = new HashSet<>();
+        Integer successfullyAssigned=0;
+
         String universityDept = assignDto.getUniversityDept();
         String universityYear = assignDto.getUniversityYear();
         String semesterNo = assignDto.getSemesterNo();
+
         SemesterEntity semester = semesterService.findByUniversityDeptAndUniversityYearAndSemesterNo(universityDept, universityYear, semesterNo);
-        SemesterEntity semester1 = new SemesterEntity();
-        semesterService.getAllSemesters().stream()
-                .filter(s -> s.getSemesterNo().equals(semesterNo) && s.getUniversityDept().equals(universityDept)&& s.getUniversityYear().equals(universityYear))
-                .map(s->{
-                    semester1.setId(s.getId());
-                    semester1.setUniversityDept(s.getUniversityDept());
-                    semester1.setSemesterNo(s.getSemesterNo());
-                    semester1.setUniversityYear(s.getUniversityYear());
-                    semester1.setStartDate(s.getStartDate());
-                    semester1.setEndDate(s.getEndDate());
-                    return semester1;
-                })
-                .collect(Collectors.toSet());
         Set<ScheduledCoursesEntity> scheduledCoursesEntitySet = scheduledCoursesRepository.findAllBySemesterId(semester.getId());
-        Set<ScheduledCoursesEntity> scheduledCoursesEntitySet2 = scheduledCoursesRepository.findAll().stream().
-                filter(x -> x.getSemesterId().equals(semester1.getId()))
-                .collect(Collectors.toSet());
+
         for (Long id : studentsId) {
             if (studentRepository.existsById(id)) {
-                for (ScheduledCoursesEntity schCourse : scheduledCoursesEntitySet2) {
+                successfullyAssigned+=1;
+                for (ScheduledCoursesEntity schCourse : scheduledCoursesEntitySet) {
                     create(id, schCourse.getId());
                     coursesId.add(schCourse.getId());
 
                 }
-            }
+            }else notAssigned.add(id);
         }
-        return scheduledCoursesEntitySet2;
+        return studentsId.size() + " students were given as input. "+successfullyAssigned + " students were successfully assigned. "+ notAssigned.size()+ " students were not successfully assigned with IDs: "+ notAssigned.toString();
     }
-
-        /*
-        studentIDs
-                .stream()
-                .map(studentService::getStudentById)
-                .forEach(student -> {
-                    var studentScheduledCourses = student.getScheduleCourses();
-                    var unassignedCourses = scheduledCourses
-                            .stream()
-                            .filter(scheduleCourse -> !studentScheduledCourses.contains(scheduleCourse))
-                            .collect(Collectors.toSet());
-                    if (unassignedCourses.size() == 0) {
-                        var studentHuman = student.getHuman();
-                        unassignedStudents.add(studentHuman.getFirstname() + " " + studentHuman.getLastname());
-                    }
-                    else {
-                        assignedStudents.add(student);
-                        studentScheduledCourses.addAll(unassignedCourses);
-                        studentService.save(student);
-                    }
-                });
-         */
-
-
 
     public void create (Long studentId, Long scheduledId){
         AssignStudentsEntity createOrUpdateMe = new AssignStudentsEntity();
         createOrUpdateMe.setScheduledCourseId(scheduledId);
         createOrUpdateMe.setStudentId(studentId);
         this.assignStudentsRepository.save(createOrUpdateMe);
+
     }
 
     public List<AssignStudentsDto> getAllAssigned(){
@@ -114,6 +78,10 @@ public class AssignStudentsService {
                 })
                 .collect(Collectors.toList());
 
+    }
+
+    public void deleteAssignedById(Long assignedToDelete){
+        assignStudentsRepository.deleteById(assignedToDelete);
     }
 
 

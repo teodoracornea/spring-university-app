@@ -70,20 +70,21 @@ public class SemesterService {
     }
 
     public SemesterEntity findByUniversityDeptAndUniversityYearAndSemesterNo(String universityDept, String universityYear, String semesterNo) {
-        SemesterEntity semesterFound = new SemesterEntity();
+//
         Optional<SemesterEntity> semesterOptional = this.semesterRepository.findByUniversityDeptAndUniversityYearAndSemesterNo(universityDept, universityYear, semesterNo);
-        if(semesterOptional.isEmpty()){
-            throw new RuntimeException("Could not find semester");
-        }
-        SemesterEntity semesterEntity = semesterOptional.get();
-        semesterFound.setUniversityYear(semesterEntity.getUniversityYear());
-        semesterFound.setSemesterNo(semesterEntity.getSemesterNo());
-        semesterFound.setUniversityDept(semesterEntity.getUniversityDept());
-        semesterFound.setStartDate(semesterEntity.getStartDate());
-        semesterFound.setEndDate(semesterEntity.getEndDate());
+        return semesterOptional.orElseThrow(() -> new RuntimeException("Could not find semester"));
+//        if(semesterOptional.isEmpty()){SemesterEntity semesterFound = new SemesterEntity();
+//            throw new RuntimeException("Could not find semester");
+//        }
+//        SemesterEntity semesterEntity = semesterOptional.get();
+//        semesterFound.setUniversityYear(semesterEntity.getUniversityYear());
+//        semesterFound.setSemesterNo(semesterEntity.getSemesterNo());
+//        semesterFound.setUniversityDept(semesterEntity.getUniversityDept());
+//        semesterFound.setStartDate(semesterEntity.getStartDate());
+//        semesterFound.setEndDate(semesterEntity.getEndDate());
 
 
-        return semesterFound;
+
     }
 
 

@@ -9,7 +9,7 @@ public class ProfessorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(targetEntity = HumanEntity.class, cascade = CascadeType.ALL)
+    @OneToOne(targetEntity = HumanEntity.class, cascade = CascadeType.MERGE)
     private HumanEntity human;
 
     public Long getId() {

@@ -14,6 +14,8 @@ public interface SemesterRepository extends JpaRepository<SemesterEntity, Long> 
     @Query("select s from semesters s where s.semesterNo = '2'")
     List<SemesterEntity> findAllSemesterTwo();
 
+    @Query("select s from semesters s where s.universityDept = ?1 and s.universityYear = ?2 and s.semesterNo = ?3")
     Optional<SemesterEntity> findByUniversityDeptAndUniversityYearAndSemesterNo(String universityDept, String universityYear, String semesterNo);
+
 
 }

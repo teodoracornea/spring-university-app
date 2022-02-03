@@ -7,4 +7,8 @@ import ro.fasttrackit.repository.dao.AssignStudentsEntity;
 @Repository
 public interface AssignStudentsRepository extends JpaRepository<AssignStudentsEntity, Long> {
 
+
+
+
+
 }
