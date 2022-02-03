@@ -7,6 +7,7 @@ import ro.fasttrackit.repository.dao.SemesterEntity;
 import ro.fasttrackit.service.model.SemesterDto;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -67,6 +68,26 @@ public class SemesterService {
                 .collect(Collectors.toList());
 
     }
+
+    public SemesterEntity findByUniversityDeptAndUniversityYearAndSemesterNo(String universityDept, String universityYear, String semesterNo) {
+        SemesterEntity semesterFound = new SemesterEntity();
+        Optional<SemesterEntity> semesterOptional = this.semesterRepository.findByUniversityDeptAndUniversityYearAndSemesterNo(universityDept, universityYear, semesterNo);
+        if(semesterOptional.isEmpty()){
+            throw new RuntimeException("Could not find semester");
+        }
+        SemesterEntity semesterEntity = semesterOptional.get();
+        semesterFound.setUniversityYear(semesterEntity.getUniversityYear());
+        semesterFound.setSemesterNo(semesterEntity.getSemesterNo());
+        semesterFound.setUniversityDept(semesterEntity.getUniversityDept());
+        semesterFound.setStartDate(semesterEntity.getStartDate());
+        semesterFound.setEndDate(semesterEntity.getEndDate());
+
+
+        return semesterFound;
+    }
+
+
+
 
 
 

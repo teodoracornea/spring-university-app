@@ -30,7 +30,9 @@ public class ScheduledCoursesService {
 
     public void createOrUpdateSC(ScheduledCourseDto toCreate){
         ScheduledCoursesEntity createOrUpdateMe = new ScheduledCoursesEntity();
-        if(courseRepository.existsById(toCreate.getCourseId())){
+        if(courseRepository.existsById(toCreate.getCourseId(
+
+        ))){
             if(professorRepository.existsById(toCreate.getProfessorId())){
                 if(semesterRepository.existsById(toCreate.getSemesterId())){
                     createOrUpdateMe.setId(toCreate.getId());
