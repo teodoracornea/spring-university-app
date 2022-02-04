@@ -2,7 +2,6 @@ package ro.fasttrackit.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ro.fasttrackit.repository.dao.ScheduledCoursesEntity;
 import ro.fasttrackit.service.AssignStudentsService;
 import ro.fasttrackit.service.model.AssignDto;
 import ro.fasttrackit.service.model.AssignStudentsDto;
