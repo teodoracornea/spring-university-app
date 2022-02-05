@@ -29,6 +29,6 @@ public class ProfessorController {
 
     @DeleteMapping("api/professors/{id}")
     public void deleteProfessorsById(@PathVariable("id") Long professorId){
-        this.professorService.deleProfessorById(professorId);
+        this.professorService.deleteProfessorById(professorId);
     }
 }

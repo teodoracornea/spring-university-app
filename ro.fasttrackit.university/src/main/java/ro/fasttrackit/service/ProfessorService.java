@@ -58,7 +58,9 @@ public class ProfessorService {
 
     }
 
-    public void deleProfessorById(Long professorIdToDelete){
+    public void deleteProfessorById(Long professorIdToDelete){
         this.professorRepository.deleteById(professorIdToDelete);
     }
+
+
 }
