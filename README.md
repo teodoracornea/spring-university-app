@@ -29,9 +29,9 @@ You need to schedule a course:
 In Swagger go to scheduled-courses-controller -> POST -> Try it out,  and write the Ids of an existing, course, semester and professor, such as:
 ```
 {
-  "courseId": 3,
+  "courseId": 5,
   "professorId": 1,
-  "semesterId": 4
+  "semesterId": 1
 }
 ```
 The messag is now sent. To open the consumer go to spring-university-app/demo-consumer/
